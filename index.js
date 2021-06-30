@@ -3,11 +3,11 @@ const assert = require('nanoassert')
 
 module.exports = class Key {
   constructor (opts = {}) {
-    this.sk = opts.sk || randomScalar(opts.seed)
-    this.pk = new Uint8Array(sodium.crypto_core_ristretto255_BYTES)
+    this.secretKey = opts.sk || randomScalar(opts.seed)
+    this.publicKey = new Uint8Array(sodium.crypto_core_ristretto255_BYTES)
 
-    sodium.crypto_scalarmult_ristretto255_base(this.pk, this.sk)
-    assert(sodium.crypto_core_ristretto255_is_valid_point(this.pk), 'invalid ristretto key')
+    sodium.crypto_scalarmult_ristretto255_base(this.publicKey, this.secretKey)
+    assert(sodium.crypto_core_ristretto255_is_valid_point(this.publicKey), 'invalid ristretto key')
   }
 
   dh (pk) {
@@ -18,7 +18,7 @@ module.exports = class Key {
 
     sodium.crypto_scalarmult_ristretto255(
       output,
-      this.sk,
+      this.secretKey,
       pk
     )
 
@@ -32,7 +32,7 @@ module.exports = class Key {
 
     sodium.crypto_core_ristretto255_scalar_add(
       output,
-      this.sk,
+      this.secretKey,
       scalar
     )
 

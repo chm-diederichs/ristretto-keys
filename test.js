@@ -14,10 +14,10 @@ for (let i = 0; i < trials; i++) {
   const b = a.tweak(scalar)
   sodium.crypto_scalarmult_ristretto255_base(check1, scalar)
 
-  if (sodium.crypto_core_ristretto255_add(check2, a.pk, check1) !== 0) {
-    sodium.crypto_core_ristretto255_sub(check2, a.pk, check1)
+  if (sodium.crypto_core_ristretto255_add(check2, a.publicKey, check1) !== 0) {
+    sodium.crypto_core_ristretto255_sub(check2, a.publicKey, check1)
   }
-  if (!Buffer.compare(check2, Buffer.from(b.pk))) fail++
+  if (!Buffer.compare(check2, Buffer.from(b.publicKey))) fail++
 }
 
 console.log('fails', Math.round(fail * 100 / trials) + '%')
