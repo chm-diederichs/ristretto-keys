@@ -4,7 +4,7 @@ const assert = require('nanoassert')
 module.exports = class Key {
   constructor (opts = {}) {
     this.secretKey = opts.sk || randomScalar(opts.seed)
-    this.publicKey = new Uint8Array(sodium.crypto_core_ristretto255_BYTES)
+    this.publicKey = Buffer.alloc(sodium.crypto_core_ristretto255_BYTES)
 
     sodium.crypto_scalarmult_ristretto255_base(this.publicKey, this.secretKey)
     assert(sodium.crypto_core_ristretto255_is_valid_point(this.publicKey), 'invalid ristretto key')
@@ -41,7 +41,7 @@ module.exports = class Key {
 }
 
 function randomScalar () {
-  const s = new Uint8Array(sodium.crypto_core_ristretto255_SCALARBYTES)
+  const s = Buffer.alloc(sodium.crypto_core_ristretto255_SCALARBYTES)
   sodium.crypto_core_ristretto255_scalar_random(s)
   return s
 }
