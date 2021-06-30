@@ -8,6 +8,10 @@
   },
   "keywords": [],
   "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:chm-diederichs/ristretto-keys.git"
+  },
   "license": "ISC",
   "dependencies": {
     "sodium-native": "git+https://github.com/sodium-friends/sodium-native.git#ristretto"
